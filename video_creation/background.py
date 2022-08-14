@@ -3,8 +3,6 @@ import random
 from random import randrange
 import re
 from typing import Any, Tuple
-
-
 from moviepy.editor import VideoFileClip
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from pytube import YouTube
@@ -13,6 +11,9 @@ from pytube.cli import on_progress
 from utils import settings
 from utils.CONSTANTS import background_options
 from utils.console import print_step, print_substep
+import os
+os.environ["IMAGEIO_FFMPEG_EXE"] = "/Users/kaleemullahqasim/Downloads/ffmpeg"
+
 
 
 def get_start_and_end_times(video_length: int, length_of_clip: int) -> Tuple[int, int]:
@@ -46,6 +47,7 @@ def get_background_config():
 
 
 def download_background(background_config: Tuple[str, str, str, Any]):
+    # if background mp4 file already in folder the skip the download 
     """Downloads the background/s video from YouTube."""
     Path("./assets/backgrounds/").mkdir(parents=True, exist_ok=True)
     # note: make sure the file name doesn't include an - in it
@@ -57,7 +59,7 @@ def download_background(background_config: Tuple[str, str, str, Any]):
     )
     print_substep("Downloading the backgrounds videos... please be patient 🙏 ")
     print_substep(f"Downloading {filename} from {uri}")
-    YouTube(uri, on_progress_callback=on_progress).streams.filter(res="1080p").first().download(
+    YouTube(uri, on_progress_callback=on_progress).streams.filter(res="720p").first().download(
         "assets/backgrounds", filename=f"{credit}-{filename}"
     )
     print_substep("Background video downloaded successfully! 🎉", style="bold green")

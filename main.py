@@ -1,17 +1,20 @@
 #!/usr/bin/env python
+# importing 
 import math
 import re
 from subprocess import Popen
 from os import name
-
 from prawcore import ResponseException
-
 from reddit.subreddit import get_subreddit_threads
 from utils.cleanup import cleanup
 from utils.console import print_markdown, print_step, print_substep
 from utils import settings
 from utils.id import id
 from utils.version import checkversion
+
+import os
+os.environ["IMAGEIO_FFMPEG_EXE"] = "/Users/kaleemullahqasim/Downloads/ffmpeg"
+
 
 from video_creation.background import (
     download_background,

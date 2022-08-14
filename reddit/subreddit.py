@@ -1,15 +1,15 @@
+# importing the necessary modules
 import re
-
 from prawcore.exceptions import ResponseException
-
 from utils import settings
 import praw
 from praw.models import MoreComments
-
 from utils.console import print_step, print_substep
 from utils.subreddit import get_subreddit_undone
 from utils.videos import check_done
 from utils.voice import sanitize_text
+
+
 
 
 def get_subreddit_threads(POST_ID: str):
@@ -41,6 +41,8 @@ def get_subreddit_threads(POST_ID: str):
             check_for_async=False,
         )
     except ResponseException as e:
+        # If the user is not logged in, the exception will be raised.
+        print(e)
         match e.response.status_code:
             case 401:
                 print("Invalid credentials - please check them in config.toml")
